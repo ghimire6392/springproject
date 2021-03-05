@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringBoot Application</title>
+</head>
+<link rel="stylesheet" th:href="@{css/bootstrap.css}">
+<body>
+<!--<span th:text="${users}">title</span>-->
+
+<!--<ul>-->
+<!--    <li th:each="u : ${users}"><span th:text="${u.name}"></span></li>-->
+<!--</ul>-->
+</br>
+</br>
+</br>
+
+<div class="container">
+    <div class="row">
+        Welcome ! <span th:text="${loggedUser.name}"></span>
+    </div>
+    <div class="row">
+        <a href="/logout">Log out</a>
+    </div>
+    <form method="post" modelAttribute="user" th:action="@{/user}">
+        <div class="form-row">
+            <!--            <div class="form-group col-md-6">-->
+            <!--                <label for="id">ID</label>-->
+            <!--                <input class="form-control" id="id" name="id" type="number" required>-->
+            <!--            </div>-->
+            <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input class="form-control" id="name" name="name" type="text" th:value="${user != null?user.name:''}"
+                       required>
+                <input class="form-control" id="id" name="id" type="number" th:value="${user != null?user.id:''}"
+                       required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input class="form-control" id="password" name="password" type="text"
+                       th:value="${user != null?user.usArrivalYear:''}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="usArrivalYear">US Arrival Year</label>
+                <input class="form-control" id="usArrivalYear" name="usArrivalYear" type="number"
+                       th:value="${user != null?user.usArrivalYear:''}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input class="form-control" id="email" name="email" type="email"
+                       th:value="${user != null?user.email:''}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="address">Address</label>
+                <input class="form-control" id="address" name="address" type="text"
+                       th:value="${user != null?user.address:''}" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="occupation">Occupation</label>
+                <select class="form-control" id="occupation" name="occupation" required>
+                    <option selected>Choose...</option>
+                    <option th:each="occupation: ${occupations}" th:value="${occupation}"
+                            th:text="${occupation}" th:selected="${user != null && user.occupation eq occupation}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                    Check me out
+                </label>
+            </div>
+        </div>
+        <button style="background-color: green" type="submit" class="btn btn-primary"><span
+                th:text="${user == null}?'Sign in':'Update'"></span>
+        </button>
+    </form>
+</div>
+</br>
+</br>
+
+<table align="center" class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">US Arrival Year</th>
+        <th scope="col">Email</th>
+        <th scope="col">Address</th>
+        <th scope="col">Occupation</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user: ${users}">
+        <td th:text="${user.id}">Mark</td>
+        <td th:text="${user.name}">Mark</td>
+        <td th:text="${user.usArrivalYear}">Mark</td>
+        <td th:text="${user.email}">Mark</td>
+        <td th:text="${user.address}">Mark</td>
+        <td th:text="${user.occupation}">Mark</td>
+        <td><a th:href="@{/user/edit/}+${user.id}">Edit</a> | <a th:href="@{/user?action=D&id=}+${user.id}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
